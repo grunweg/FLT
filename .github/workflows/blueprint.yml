@@ -62,11 +62,12 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for all branches and tags
 
-      - name: Install elan
-        run: curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | sh -s -- -y
-
-      - name: Get Mathlib cache
-        run: ~/.elan/bin/lake exe cache get || true
+      - name: Configure Lean and get mathlib cache
+        uses: leanprover/lean-action@f807b338d95de7813c5c50d018f1c23c9b93b4ec # 2025-04-24
+        with:
+          auto-config: false
+          use-github-cache: false
+          use-mathlib-cache: true
 
       - name: check that FLT.lean is up to date
         run: ~/.elan/bin/lake exe mk_all --check
